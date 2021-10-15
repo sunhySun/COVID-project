@@ -1,3 +1,20 @@
+### 使用说明
+
+项目codeblocks构建，运行即可通过接口访问
+
+接口地址：`http://localhost:7999/`
+
+修改`src/http/http_server.cpp` 中的`GenerateTest`函数可以修改读取的文件（L161左右）
+
+​																				`HandleHttpEvent`函数可以修改读取的数据条数（L75）
+
+```
+eg.
+GenerateTest(connection,10);	//第二个参数表示读取数据的数量，参数缺省表示读取全部数据
+```
+
+**注**：在测试`getFeature`的时候需要将读取的数据条数改小一点，计算最短路时耗时可能较长（1000左右时间在几分钟）
+
 ### 相关接口1.0
 
 1. url:`/generate`
@@ -133,3 +150,15 @@
     ```
 
     按照年份或月统计论文数量
+    
+11. url `/getAllInfo`
+
+    input:id
+
+    output:
+
+    ```
+    [{"address":["Wuhan Pulm Hosp","Jinyintan Hosp","Capital Med Univ","Tsinghua Univ","China Japan Friendship Hosp","Chinese Acad Med Sci"],"articleId":"WOS:000522650100033","citeNum":21954560,"id":0,"publicationTime":"MAR 28 2020","relatedEdge":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],"relatedNode":[0,1,2,3,4,5],"title":"Clinical course and risk factors for mortality of adult inpatients with COVID-19 in Wuhan, China: a retrospective cohort study"},{"address":["Hosp Moinhos Vento Porto Alegre","Univ Fed Rio Grande Porto Alegre"],"articleId":"WOS:000533411000039","citeNum":21954560,"id":1,"publicationTime":"MAY 7 2020","relatedEdge":[15],"relatedNode":[6,7],"title":"Clinical Characteristics of Covid-19 in China"}]
+    ```
+
+    返回包含所有信息的json数组，数组中的元素格式参见4中info格式
