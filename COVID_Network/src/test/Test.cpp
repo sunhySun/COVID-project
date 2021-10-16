@@ -11,13 +11,35 @@ Test::Test(std::string p,int num){
 Feature Test::testFeatures(){
     if(featureFlag) return feature;
     featureFlag = true;
+    std::vector<int> vec;
+    std::vector<int> nodeDegree;
 
     feature.numNode = graph.getNumNode();
     feature.numEdge = graph.getNumEdge();
     feature.asp = graph.averageSP();
     feature.C = graph.clusteringCoefficient();
-    feature.degree = graph.nodeDegreeDistribution();
-    feature.coreness = graph.coreness();
+    feature.degree = graph.nodeDegreeDistribution(nodeDegree);
+    feature.nodeDegree = nodeDegree;
+    feature.coreness = graph.coreness(vec);
+    feature.nodeCore = vec;
+    feature.maxConnSub = graph.maximalConnectedSubgraph();
+    return feature;
+}
+
+Feature Test::testWithoutASP(){
+    if(featureFlag) return feature;
+    featureFlag = true;
+    std::vector<int> vec;
+    std::vector<int> nodeDegree;
+
+    feature.numNode = graph.getNumNode();
+    feature.numEdge = graph.getNumEdge();
+//    feature.asp = graph.averageSP();
+    feature.C = graph.clusteringCoefficient();
+    feature.degree = graph.nodeDegreeDistribution(nodeDegree);
+    feature.nodeDegree = nodeDegree;
+    feature.coreness = graph.coreness(vec);
+    feature.nodeCore = vec;
     feature.maxConnSub = graph.maximalConnectedSubgraph();
     return feature;
 }

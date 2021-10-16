@@ -144,12 +144,14 @@ bool cmp(const std::pair<int,int> &p1,const std::pair<int,int> &p2){
     return p1.first<p2.first;
 }
 
-std::vector<std::pair<int,int> > Graph::nodeDegreeDistribution(){
+std::vector<std::pair<int,int> > Graph::nodeDegreeDistribution(std::vector<int> &nodeDegree){
     clock_t start=clock();
     std::unordered_map<int,int>  dist;
     getConnect();
+    nodeDegree.clear();
     for(int i=0;i<num_node;i++){
         int degree = connect[i].size();
+        nodeDegree.push_back(degree);
         std::unordered_map<int,int> ::iterator it = dist.find(degree);
         if(it!=dist.end()){
             it->second++;
@@ -171,32 +173,64 @@ std::vector<std::pair<int,int> > Graph::nodeDegreeDistribution(){
     return result;
 }
 
+struct dijNode{
+    int id;
+    int dis;
+    bool operator < (const dijNode &p)const{
+        return dis < p.dis;
+    }
+};
+std::priority_queue<dijNode> dijQ;
+
 std::vector<int> Graph::dijstra(int s){
     int inf = num_node *2;
-    std::vector<int> dist(num_node,inf);
     std::vector<bool> flag(num_node,false);
-    dist[s]=0;
-    for(int i=0;i<num_node-1;i++){
-        int u=-1,mi=inf;
-        for(int j=0;j<num_node;j++){
-            if(flag[j]) continue;
-            if(dist[j]<mi){
-                u=j;
-                mi=dist[j];
-            }
-        }
-//        printf("%d\n",u);
-        if(u==-1)    break;
+    std::vector<int> dis(num_node,inf);
+    dijNode node;
+    dis[s]=0;
+    node.id=s;node.dis=0;
+    dijQ.push(node);
+    while(!dijQ.empty()){
+        node = dijQ.top();
+        dijQ.pop();
+        int u=node.id;
+        int mi=node.dis;
         flag[u]=true;
         for(auto it=connect[u].begin();it!=connect[u].end();it++){
 //            printf("%d,%d\n",u,*it);
             int v = *it;
             if(flag[v]) continue;
-            if(mi+1 < dist[v])
-                dist[v]=mi+1;
+            if(mi+1 < dis[v]){
+                dis[v]=mi+1;
+                node.dis = dis[v];
+                node.id = v;
+                dijQ.push(node);
+            }
+
         }
     }
-    return dist;
+
+//    for(int i=0;i<num_node-1;i++){
+//        int u=-1,mi=inf;
+//        for(int j=0;j<num_node;j++){
+//            if(flag[j]) continue;
+//            if(dist[j]<mi){
+//                u=j;
+//                mi=dist[j];
+//            }
+//        }
+////        printf("%d\n",u);
+//        if(u==-1)    break;
+//        flag[u]=true;
+//        for(auto it=connect[u].begin();it!=connect[u].end();it++){
+////            printf("%d,%d\n",u,*it);
+//            int v = *it;
+//            if(flag[v]) continue;
+//            if(mi+1 < dist[v])
+//                dist[v]=mi+1;
+//        }
+//    }
+    return dis;
 }
 
 
@@ -271,7 +305,7 @@ double Graph::clusteringCoefficient(){
     return C;
 }
 
-int Graph::coreness(){
+int Graph::coreness(std::vector<int> &vec){
     printf("开始计算核数");
     clock_t start=clock();
     getConnect();
@@ -280,6 +314,7 @@ int Graph::coreness(){
     std::vector<int> degree;
     for(int i=0;i<num_node;i++){
         degree.push_back(connect[i].size());
+        vec.push_back(-1);
     }
     int b =num_node/10;
     if(b==0)    b=1;
@@ -304,11 +339,16 @@ int Graph::coreness(){
 //                    printf("%d %d %d\n",core,i,num);
 //                    char c;
 //                    scanf("%c",&c);
+                    vec[i]=core;
                 }
             }
         }
         core++;
         if(num%b==0)    printf(".");
+    }
+    for(int i=0;i<num_node;i++){
+        if(vec[i]==-1)
+            vec[i]=core-1;
     }
     clock_t finish = clock();
     double time = (double)(finish-start)/1000;
@@ -625,6 +665,7 @@ void Graph::graphShowSelect(int num){
         q.pop();
         int u= node.id;
         mp.insert(u);
+        if(vis[u])  continue;
         vis[u]=true;
         num--;
         std::unordered_set<int> connectu = connect[u];
@@ -638,17 +679,29 @@ void Graph::graphShowSelect(int num){
 
     json j=json::array();
     int cnt=0;
-    for(int i=0;i<num_edge;i++){
-        Edge e = E[i];
-        int u = e.uid,v=e.vid;
-        if((mp.find(u)!=mp.end())&&(mp.find(v)!=mp.end())){
-            j[cnt][0]=V[u].name;
-            j[cnt][1]=V[v].name;
-            cnt++;
+//    for(int i=0;i<num_edge;i++){
+//        Edge e = E[i];
+//        int u = e.uid,v=e.vid;
+//        if((mp.find(u)!=mp.end())&&(mp.find(v)!=mp.end())){
+//            j[cnt][0]=V[u].name;
+//            j[cnt][1]=V[v].name;
+//            cnt++;
+//        }
+//    }
+    for(auto it1 = mp.begin();it1!=mp.end();it1++){
+        for(auto it2=it1;it2!=mp.end();it2++){
+            if(it1 == it2)  continue;
+            if(connect[*it1].find(*it2)!=connect[*it1].end()){
+                j[cnt][0]=V[*it1].name;
+                j[cnt][1]=V[*it2].name;
+                cnt++;
+            }
         }
     }
+    printf("%d\n",cnt);
+
 
     std::ofstream out;
-    out.open("graph-200.json",std::ios::out);
+    out.open("graph-50.json",std::ios::out);
     out<<j<<std::endl;
 }

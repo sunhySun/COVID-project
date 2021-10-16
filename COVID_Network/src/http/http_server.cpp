@@ -80,6 +80,12 @@ void HttpServer::HandleHttpEvent(mg_connection *connection,mg_http_message *http
         int index = charToInt(id);
         getFeature(connection,index);
     }
+    else if(route_check(http_req,"/getFeatureWithoutASP")){
+        char id[10];
+        mg_http_get_var(&http_req->query,"id",id,sizeof(id));
+        int index = charToInt(id);
+        getFeatureWithoutASP(connection,index);
+    }
     else if(route_check(http_req,"/getGraph")){
         char id[10];
         mg_http_get_var(&http_req->query,"id",id,sizeof(id));
@@ -181,6 +187,20 @@ void HttpServer::getFeature(mg_connection *connection,int index){
     }
     Test test = tests[index];
     Feature feature = test.testFeatures();
+    json j;
+    feature.toJson(j);
+    SendHttpRsp(connection,200,j);
+}
+
+void HttpServer::getFeatureWithoutASP(mg_connection *connection,int index){
+    if(index >= tests.size()){
+        printf("getFeature：参数有误！\n");
+        json j;
+        j["error"] = std::string("getFeature：参数有误！\n");
+        SendHttpRsp(connection,500,j);
+    }
+    Test test = tests[index];
+    Feature feature = test.testWithoutASP();
     json j;
     feature.toJson(j);
     SendHttpRsp(connection,200,j);

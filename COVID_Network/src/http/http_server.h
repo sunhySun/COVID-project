@@ -36,6 +36,7 @@ private:
     static int GenerateTest(mg_connection *connection,int num=-1);
     static void getGraph(mg_connection *connection,int index);
     static void getFeature(mg_connection *connection,int index);
+    static void getFeatureWithoutASP(mg_connection *connection,int index);
     static void getInfo(mg_connection *connection,int index,int id);
     static void testRandomAttack(mg_connection *connection,int index,int divide);
     static void testIntentialAttack(mg_connection *connection,int index,int divide);

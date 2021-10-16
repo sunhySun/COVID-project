@@ -22,10 +22,10 @@ void httpConnect(){
 
 int main(int argc, char *argv[])
 {
-//    std::string path="static/webofscience2021(1).json";
+    std::string path="static/webofscience2021(1).json";
 //    std::ofstream out;
 //    out.open("result.json",std::ios::out);
-//    Test test(path,1000);
+//    Test test(path,10000);
 //    Feature feature = test.testFeatures();
 //    json j;
 //    feature.toJson(j);
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 //    Graph graph;
 //    graph.ReadData(path,-1);
 //    graph.generateGraph();
-//    graph.graphShowSelect(200);
+//    graph.graphShowSelect(50);
 //    graph.sortedEdgebyTime();
 //    graph.show();
 //    graph.averageSP();

@@ -28,6 +28,8 @@ public:
 
     Feature testFeatures();
 
+    Feature testWithoutASP();
+
     void testGraph(json &j);
 
     bool testInfo(json &j,int id);

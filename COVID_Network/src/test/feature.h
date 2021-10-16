@@ -9,7 +9,9 @@ struct Feature{
     double asp;
     double C;
     std::vector<std::pair<int,int> > degree;
+    std::vector<int> nodeDegree;
     int coreness;
+    std::vector<int> nodeCore;
     int maxConnSub;
 
     void toJson(json &j){
@@ -23,7 +25,9 @@ struct Feature{
             j["degree"][i]["x"]=degree[i].first;
             j["degree"][i]["y"]=degree[i].second;
         }
+        j["nodeDegree"] = nodeDegree;
         j["coreness"] = coreness;
+        j["nodeCore"] = nodeCore;
         j["maxConnSub"] = maxConnSub;
     }
 };

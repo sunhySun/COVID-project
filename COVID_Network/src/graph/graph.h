@@ -51,13 +51,13 @@ public:
     void ReadData(std::string path,int num=-1);    //将json中的数据读取到infos中
     void generateGraph();   //根据数据生成图
 
-    std::vector<std::pair<int,int> > nodeDegreeDistribution();      //计算degreedistribution（按度数从小到大返回）
+    std::vector<std::pair<int,int> > nodeDegreeDistribution(std::vector<int> &nodeDegree);      //计算degreedistribution（按度数从小到大返回）
 
     double averageSP();     //计算平均最短路，dist=num_node*2，说明两点不连通
 
     double clusteringCoefficient();     //计算聚集系数（不考虑重边的情况）
 
-    int coreness();     //计算核数
+    int coreness(std::vector<int> &vec);     //计算核数
 
     int maximalConnectedSubgraph(); //求最大联通子图结点数
 
