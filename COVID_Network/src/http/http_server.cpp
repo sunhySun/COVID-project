@@ -153,7 +153,7 @@ void HttpServer::HandleHttpEvent(mg_connection *connection,mg_http_message *http
 }
 
 void HttpServer::SendHttpRsp(mg_connection *connection,int code,json rsp){
-    mg_http_reply(connection,code,"Content-Type: application/json\r\n",rsp.dump().c_str());
+    mg_http_reply(connection,code,"Access-Control-Allow-Origin: * \r\nContent-Type: application/json\r\n",rsp.dump().c_str());
 }
 
 //=============================================================

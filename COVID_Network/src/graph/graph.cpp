@@ -219,7 +219,8 @@ double Graph::averageSP(){
     clock_t finish = clock();
     double time = (double)(finish-start)/1000;
     double result=sum/num_node/(num_node-1);
-    printf("\n平均最短路为 %f ,耗时 %f 秒！\n",result,time);
+    FILE *f = fopen("time.txt","w");
+    fprintf(f,"\n平均最短路为 %f ,耗时 %f 秒！\n",result,time);
     return result;
 }
 
@@ -485,7 +486,7 @@ bool Graph::getInfo(json &j,int id){
 //    printf("%d %d\n",id,infos.size());
     if(id>=infos.size())    return false;
     Info info = infos[id];
-    printf("info:%d\n",info.id);
+//    printf("info:%d\n",info.id);
     j["id"]=info.id;
     j["title"]=info.title;
     j["publicationTime"]=info.publicationTime;
@@ -592,4 +593,62 @@ void Graph::countPaperNum(json &j,bool byYear){
         j[i]["x"]=vec[i].first;
         j[i]["y"]=vec[i].second;
     }
+}
+
+struct bfsnode{
+    int id;
+    int degree;
+    bool operator < (const  bfsnode &p) const{
+        return degree < p.degree;
+    }
+};
+
+void Graph::graphShowSelect(int num){
+    getConnect();
+    std::vector<bool> vis(num_node,false);
+    std::priority_queue<bfsnode> q;
+    int ma=0,u=0;
+    for(int i=0;i<connect.size();i++){
+        int t= connect[i].size();
+        if(t > ma){
+            ma = t;
+            u = i;
+        }
+    }
+    bfsnode node;
+    node.id = u;
+    node.degree = ma;
+    q.push(node);
+    std::unordered_set<int> mp;
+    while(!q.empty() && num>0){
+        node = q.top();
+        q.pop();
+        int u= node.id;
+        mp.insert(u);
+        vis[u]=true;
+        num--;
+        std::unordered_set<int> connectu = connect[u];
+        for(auto it = connectu.begin();it!=connectu.end();it++){
+            if(vis[*it])    continue;
+            node.id=*it;
+            node.degree = connect[node.id].size();
+            q.push(node);
+        }
+    }
+
+    json j=json::array();
+    int cnt=0;
+    for(int i=0;i<num_edge;i++){
+        Edge e = E[i];
+        int u = e.uid,v=e.vid;
+        if((mp.find(u)!=mp.end())&&(mp.find(v)!=mp.end())){
+            j[cnt][0]=V[u].name;
+            j[cnt][1]=V[v].name;
+            cnt++;
+        }
+    }
+
+    std::ofstream out;
+    out.open("graph-200.json",std::ios::out);
+    out<<j<<std::endl;
 }
