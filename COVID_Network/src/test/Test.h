@@ -64,4 +64,6 @@ public:
     void graphSelectNode(int num,json &j);
 
     void getEdge(json &j);
+
+    void sortDegree(json &j);
 };

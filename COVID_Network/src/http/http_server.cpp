@@ -174,6 +174,12 @@ void HttpServer::HandleHttpEvent(mg_connection *connection,mg_http_message *http
         int index = charToInt(id);
         getEdge(connection,index);
     }
+     else if(route_check(http_req,"/sortDegree")){
+        char id[10];
+        mg_http_get_var(&http_req->query,"id",id,sizeof(id));
+        int index = charToInt(id);
+        sortDegree(connection,index);
+    }
 }
 
 void HttpServer::SendHttpRsp(mg_connection *connection,int code,json rsp){
@@ -395,6 +401,20 @@ void HttpServer::getEdge(mg_connection *connection,int index){
     Test test = tests[index];
     json j;
     test.getEdge(j);
+    SendHttpRsp(connection,200,j);
+}
+
+void HttpServer::sortDegree(mg_connection *connection,int index){
+    if(index >= tests.size()){
+        printf("countPaperByYear：参数有误！\n");
+        json j;
+        j["error"] = std::string("countPaperByYear：参数有误！\n");
+
+        SendHttpRsp(connection,500,j);
+    }
+    Test test = tests[index];
+    json j;
+    test.sortDegree(j);
     SendHttpRsp(connection,200,j);
 }
 

@@ -91,6 +91,8 @@ public:
 
     void getEdge(json &j);
 
+    void sortDegree(json &j);
+
 };
 
 

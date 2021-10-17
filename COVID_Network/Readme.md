@@ -193,4 +193,10 @@ GenerateTest(connection,10);	//第二个参数表示读取数据的数量，参�
     [["Univ Milano Bicocca","Univ Washington"],["Univ Milano Bicocca","Columbia Univ"],["Univ Milano Bicocca","Huazhong Univ Sci & Technol"],["Univ Washington","Columbia Univ"],["Columbia Univ","Huazhong Univ Sci & Technol"],["Huazhong Univ Sci & Technol","Univ Cambridge"]]
     ```
 
-    
+14. `/sortDegree`
+
+    input： id
+
+    output[{id,degree,name}];
+
+    按节点度数从小到大排序

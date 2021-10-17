@@ -218,3 +218,7 @@ void Test::graphSelectNode(int num,json &j){
 void Test::getEdge(json &j){
     graph.getEdge(j);
 }
+
+void Test::sortDegree(json &j){
+    graph.sortDegree(j);
+}

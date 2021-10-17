@@ -724,3 +724,25 @@ void Graph::getEdge(json &j){
     }
 }
 
+bool cmpSortDegree(const std::pair<int,int> &p1,const std::pair<int,int> &p2) {
+    if(p1.second == p2.second)
+        return p1.first < p2.first;
+    return p1.second > p2.second;
+}
+
+void Graph::sortDegree(json &j){
+    getConnect();
+    std::vector<std::pair<int,int> > vec;
+    for(int i=0;i<num_node;i++){
+        std::pair<int,int> p(i,connect[i].size());
+        vec.push_back(p);
+    }
+    sort(vec.begin(),vec.end(),cmpSortDegree);
+    j=json::array();
+    for(int i=0;i<vec.size();i++){
+        j[i]["id"] = vec[i].first;
+        j[i]["degree"] = vec[i].second;
+        j[i]["name"] = V[vec[i].first].name;
+    }
+}
+

@@ -14,7 +14,7 @@ std::vector<Test> HttpServer::tests;
 
 void httpConnect(){
     std::string url = "http://localhost";
-	std::string port = "7999";
+	std::string port = "7998";
 	auto http_server = std::shared_ptr<HttpServer>(new HttpServer);
 	http_server->Init(url,port);
 	http_server->Start();
@@ -22,7 +22,7 @@ void httpConnect(){
 
 int main(int argc, char *argv[])
 {
-//    std::string path="static/webofscience2021(1).json";
+    std::string path="static/webofscience2021(1).json";
 //    std::ofstream out;
 //    out.open("result.json",std::ios::out);
 //    Test test(path);
@@ -31,11 +31,14 @@ int main(int argc, char *argv[])
 //    feature.toJson(j);
 //    out<<j;
 //    out.close();
-////    std::string path="static/new.json";
+//    std::string path="static/new.json";
 //    Graph graph;
-//    graph.ReadData(path,-1);
+//    graph.ReadData(path,100);
 //    graph.generateGraph();
-//    graph.graphShowSelect(50);
+//    json j;
+//    graph.sortDegree(j);
+//    std::cout<<j;
+////    graph.graphShowSelect(50);
 //    graph.sortedEdgebyTime();
 //    graph.show();
 //    graph.averageSP();
@@ -73,6 +76,12 @@ int main(int argc, char *argv[])
 //    result2.show();
 
     httpConnect();
+
+    //Êä³öjson
+//    std::string path="static/webofscience2021(1).json";
+//    Test test(path);
+
+
 
 	return 0;
 }

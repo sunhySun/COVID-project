@@ -23,7 +23,7 @@ public:
 //    void AddHandler(const std::string &url, ReqHandler req_handler);
 //    void RemoveHandler(const std::string &url);
 
-private:
+public:
     static void OnHttpEvent(mg_connection *connection,int event_type,void *event_data,void *fn_data);
     static void HandleHttpEvent(mg_connection *connection,mg_http_message *http_req);
     static void SendHttpRsp(mg_connection *connection,int code,json rsp);
@@ -52,6 +52,8 @@ private:
     static void graphSelectNode(mg_connection *connection,int index,int num);
 
     static void getEdge(mg_connection *connection,int index);
+
+    static void sortDegree(mg_connection *connection,int index);
 
     static int charToInt(char p[]);
     static double charToDouble(char p[]);
