@@ -209,3 +209,12 @@ void Test::sortEdgeByTime(json &j){
 void Test::countPaperNum(json &j,bool byYear){
     graph.countPaperNum(j,byYear);
 }
+
+void Test::graphSelectNode(int num,json &j){
+//    printf("test:selectNode");
+    graph.graphShowSelect(num,j);
+}
+
+void Test::getEdge(json &j){
+    graph.getEdge(j);
+}

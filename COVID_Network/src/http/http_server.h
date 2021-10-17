@@ -49,7 +49,9 @@ private:
 
     static void getAllInfo(mg_connection *connection,int index);
 
+    static void graphSelectNode(mg_connection *connection,int index,int num);
 
+    static void getEdge(mg_connection *connection,int index);
 
     static int charToInt(char p[]);
     static double charToDouble(char p[]);

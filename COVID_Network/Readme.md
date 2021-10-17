@@ -19,7 +19,9 @@ GenerateTest(connection,10);	//第二个参数表示读取数据的数量，参�
 
 1. url:`/generate`
 
-   input:/
+   input:num
+
+   ​			num=-1,读取全部数据
 
    output:
 
@@ -169,3 +171,26 @@ GenerateTest(connection,10);	//第二个参数表示读取数据的数量，参�
 
     返回包含所有信息的json数组，数组中的元素格式参见4中info格式
 
+
+
+12. `/graphSelectNode`
+
+    input:id,num(结点数量)
+
+    output:
+
+    ```
+    [["Univ Milano Bicocca","Univ Washington"],["Univ Milano Bicocca","Columbia Univ"],["Univ Milano Bicocca","Huazhong Univ Sci & Technol"],["Univ Washington","Columbia Univ"],["Columbia Univ","Huazhong Univ Sci & Technol"],["Huazhong Univ Sci & Technol","Univ Cambridge"]]
+    ```
+
+13. `/getEdge`
+
+    input:id
+
+    output:
+
+    ```
+    [["Univ Milano Bicocca","Univ Washington"],["Univ Milano Bicocca","Columbia Univ"],["Univ Milano Bicocca","Huazhong Univ Sci & Technol"],["Univ Washington","Columbia Univ"],["Columbia Univ","Huazhong Univ Sci & Technol"],["Huazhong Univ Sci & Technol","Univ Cambridge"]]
+    ```
+
+    

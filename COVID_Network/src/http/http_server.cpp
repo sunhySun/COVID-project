@@ -72,7 +72,10 @@ void HttpServer::HandleHttpEvent(mg_connection *connection,mg_http_message *http
 //        SendHttpRsp(connection,j);
 //    }
     if(route_check(http_req,"/generate")){
-        GenerateTest(connection);
+        char num[10];
+        mg_http_get_var(&http_req->query,"num",num,sizeof(num));
+        int n = charToInt(num);
+        GenerateTest(connection,n);
     }
     else if(route_check(http_req,"/getFeature")){
         char id[10];
@@ -155,6 +158,21 @@ void HttpServer::HandleHttpEvent(mg_connection *connection,mg_http_message *http
         if(t==0) f=true;
         else    f=false;
         countPaperByYear(connection,index,f);
+    }
+    else if(route_check(http_req,"/graphSelectNode")){
+        char id[10],num[10];
+        mg_http_get_var(&http_req->query,"id",id,sizeof(id));
+        mg_http_get_var(&http_req->query,"num",num,sizeof(num));
+        int index = charToInt(id);
+        int n = charToInt(num);
+//        printf("http:selctNode\n");
+        graphSelectNode(connection,index,n);
+    }
+    else if(route_check(http_req,"/getEdge")){
+        char id[10];
+        mg_http_get_var(&http_req->query,"id",id,sizeof(id));
+        int index = charToInt(id);
+        getEdge(connection,index);
     }
 }
 
@@ -349,6 +367,34 @@ void HttpServer::getAllInfo(mg_connection *connection,int index){
     Test test = tests[index];
     json j;
     test.getAllInfo(j);
+    SendHttpRsp(connection,200,j);
+}
+
+void HttpServer::graphSelectNode(mg_connection *connection,int index,int num){
+    if(index >= tests.size()){
+        printf("countPaperByYear：参数有误！\n");
+        json j;
+        j["error"] = std::string("countPaperByYear：参数有误！\n");
+
+        SendHttpRsp(connection,500,j);
+    }
+    Test test = tests[index];
+    json j;
+    test.graphSelectNode(num,j);
+    SendHttpRsp(connection,200,j);
+}
+
+void HttpServer::getEdge(mg_connection *connection,int index){
+    if(index >= tests.size()){
+        printf("countPaperByYear：参数有误！\n");
+        json j;
+        j["error"] = std::string("countPaperByYear：参数有误！\n");
+
+        SendHttpRsp(connection,500,j);
+    }
+    Test test = tests[index];
+    json j;
+    test.getEdge(j);
     SendHttpRsp(connection,200,j);
 }
 

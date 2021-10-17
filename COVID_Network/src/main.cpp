@@ -22,10 +22,10 @@ void httpConnect(){
 
 int main(int argc, char *argv[])
 {
-    std::string path="static/webofscience2021(1).json";
+//    std::string path="static/webofscience2021(1).json";
 //    std::ofstream out;
 //    out.open("result.json",std::ios::out);
-//    Test test(path,10000);
+//    Test test(path);
 //    Feature feature = test.testFeatures();
 //    json j;
 //    feature.toJson(j);

@@ -60,4 +60,8 @@ public:
     void sortEdgeByTime(json &j);
 
     void countPaperNum(json &j,bool byYear);
+
+    void graphSelectNode(int num,json &j);
+
+    void getEdge(json &j);
 };

@@ -643,7 +643,8 @@ struct bfsnode{
     }
 };
 
-void Graph::graphShowSelect(int num){
+void Graph::graphShowSelect(int num,json &j){
+//    printf("graph:selectNode");
     getConnect();
     std::vector<bool> vis(num_node,false);
     std::priority_queue<bfsnode> q;
@@ -677,7 +678,7 @@ void Graph::graphShowSelect(int num){
         }
     }
 
-    json j=json::array();
+    j=json::array();
     int cnt=0;
 //    for(int i=0;i<num_edge;i++){
 //        Edge e = E[i];
@@ -698,10 +699,28 @@ void Graph::graphShowSelect(int num){
             }
         }
     }
-    printf("%d\n",cnt);
+//    printf("graph return\n");
+//    printf("%d\n",cnt);
 
 
-    std::ofstream out;
-    out.open("graph-50.json",std::ios::out);
-    out<<j<<std::endl;
+//    std::ofstream out;
+//    out.open("graph-50.json",std::ios::out);
+//    out<<j<<std::endl;
 }
+
+void Graph::getEdge(json &j){
+    j=json::array();
+    int cnt=0;
+    getConnect();
+    for(int i=0;i<connect.size();i++){
+        for(auto it = connect[i].begin();it!=connect[i].end();it++){
+            int u=*it;
+            if(u<i){
+                j[cnt][0]=V[i].name;
+                j[cnt][1]=V[u].name;
+                cnt++;
+            }
+        }
+    }
+}
+

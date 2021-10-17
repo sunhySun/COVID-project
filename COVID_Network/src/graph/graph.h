@@ -86,8 +86,10 @@ public:
     void countPaperNum(json &j,bool byYear);
     //按照年或月为维度统计论文数量，结果返回在json中
 
-    void graphShowSelect(int num);
+    void graphShowSelect(int num,json &j);
     //从图中筛选出度数最高的点，返回name信息
+
+    void getEdge(json &j);
 
 };
 
