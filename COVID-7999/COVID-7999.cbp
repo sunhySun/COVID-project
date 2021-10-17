@@ -32,7 +32,23 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Unit filename="lib/json.hpp" />
+		<Unit filename="lib/mongoose.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/mongoose.h" />
+		<Unit filename="src/graph/attackResult.cpp" />
+		<Unit filename="src/graph/attackResult.h" />
+		<Unit filename="src/graph/graph.cpp" />
+		<Unit filename="src/graph/graph.h" />
+		<Unit filename="src/graph/graph_struct.h" />
+		<Unit filename="src/graph/hashFunction.h" />
+		<Unit filename="src/http/http_server.cpp" />
+		<Unit filename="src/http/http_server.h" />
+		<Unit filename="src/main.cpp" />
+		<Unit filename="src/test/Test.cpp" />
+		<Unit filename="src/test/Test.h" />
+		<Unit filename="src/test/feature.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

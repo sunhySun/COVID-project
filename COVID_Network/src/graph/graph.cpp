@@ -356,6 +356,61 @@ int Graph::coreness(std::vector<int> &vec){
     return core-1;
 }
 
+int Graph::sortCoreness(json &j){
+    printf("开始计算核数");
+    clock_t start=clock();
+    getConnect();
+    std::vector<std::unordered_set<int> > tmpConnect=connect;
+
+    std::vector<int> degree;
+    for(int i=0;i<num_node;i++){
+        degree.push_back(connect[i].size());
+    }
+    int b =num_node/10;
+    if(b==0)    b=1;
+    int num=num_node;
+    int core=0;
+    std::vector<std::pair<int,int> > vec;
+    while(num>0){
+        bool flag = true;  //记录有无节点被删除
+        while(flag){
+            flag=false;
+            for(int i=0;i<num_node;i++){
+                if(degree[i] ==-1)  continue;
+                if(degree[i]<=core){
+                    flag=true;
+                    for(auto it=tmpConnect[i].begin();it!=tmpConnect[i].end();it++){
+                        int u=*it;
+                        degree[u]--;
+                        tmpConnect[u].erase(i);
+                    }
+                    tmpConnect[i].clear();
+                    degree[i]=-1;
+                    num--;
+//                    printf("%d %d %d\n",core,i,num);
+//                    char c;
+//                    scanf("%c",&c);
+                    std::pair<int,int> p(i,core);
+                    vec.push_back(p);
+                }
+            }
+        }
+        core++;
+        if(num%b==0)    printf(".");
+    }
+
+    j=json::array();
+    for(int i=0;i<vec.size();i++){
+        j[i]["id"] = vec[i].first;
+        j[i]["coreness"] = vec[i].second;
+        j[i]["name"] = V[vec[i].first].name;
+    }
+    clock_t finish = clock();
+    double time = (double)(finish-start)/1000;
+    printf("\n核数（coreness）为 %d ,耗时 %f 秒！\n",core-1,time);
+    return core-1;
+}
+
 int Graph::maximalConnectedSubgraph(){
     clock_t start = clock();
     printf("开始计算最大联通子图");

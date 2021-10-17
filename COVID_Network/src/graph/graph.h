@@ -93,6 +93,8 @@ public:
 
     void sortDegree(json &j);
 
+    int sortCoreness(json &j);
+
 };
 
 

@@ -222,3 +222,7 @@ void Test::getEdge(json &j){
 void Test::sortDegree(json &j){
     graph.sortDegree(j);
 }
+
+void Test::sortCoreness(json &j){
+    graph.sortCoreness(j);
+}

@@ -36,6 +36,8 @@ int main(int argc, char *argv[])
 //    graph.ReadData(path,100);
 //    graph.generateGraph();
 //    json j;
+//    graph.sortCoreness(j);
+//    std::cout<<j;
 //    graph.sortDegree(j);
 //    std::cout<<j;
 ////    graph.graphShowSelect(50);
@@ -77,11 +79,32 @@ int main(int argc, char *argv[])
 
     httpConnect();
 
+
+
     //Êä³öjson
 //    std::string path="static/webofscience2021(1).json";
 //    Test test(path);
 
+//    std::string path="static/webofscience2021(1).json";
+//    Test test(path,10000);
+//    std::vector<double> Rs,ASPs,MCSRs;
+//    std::vector<int> ids;
+//
+//    ids = test.testRandomAttack(20,Rs,ASPs,MCSRs);
+//    json j;
+//    test.attackResultToJson(j,ids);
+//    std::ofstream out1;
+//    out1.open("randomAttack.json",std::ios::out);
+//    out1 << j;
+//    out1.close();
 
+//    ids = test.testIntentialAttack(20,Rs,ASPs,MCSRs);
+//    json j;
+//    test.attackResultToJson(j,ids);
+//    std::ofstream out2;
+//    out2.open("intentialAttack.json",std::ios::out);
+//    out2<<j;
+//    out2.close();
 
 	return 0;
 }

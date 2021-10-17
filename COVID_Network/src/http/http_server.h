@@ -54,6 +54,7 @@ public:
     static void getEdge(mg_connection *connection,int index);
 
     static void sortDegree(mg_connection *connection,int index);
+    static void sortCoreness(mg_connection *connection,int index);
 
     static int charToInt(char p[]);
     static double charToDouble(char p[]);
