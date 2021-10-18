@@ -204,7 +204,7 @@ int HttpServer::GenerateTest(mg_connection *connection,int num){
 }
 
 void HttpServer::getFeature(mg_connection *connection,int index){
-    std::string path = "data/feature.json";
+    std::string path = "data/feature-3w.json";
     std::ifstream in(path);
     if(!in.is_open()){
         printf("未成功打开文件！");
